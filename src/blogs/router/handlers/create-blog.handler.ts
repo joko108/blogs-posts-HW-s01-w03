@@ -20,7 +20,7 @@ export const createBlogHandler = async (
         const newBlog: Blog = {
             ...req.body,
             createdAt: new Date(),
-            isMembership: true,
+            isMembership: false,
         };
 
         const createdBlog = await blogsRepository.create(newBlog);
