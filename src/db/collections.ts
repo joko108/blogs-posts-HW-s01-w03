@@ -1,5 +1,5 @@
 import { Collection, Db } from "mongodb";
-import { Blog} from "../blogs/types/blog";
+import { Blog } from "../blogs/types/blog";
 import { Post } from "../posts/types/post";
 
 export const BLOG_COLLECTION_NAME = 'blogs';
