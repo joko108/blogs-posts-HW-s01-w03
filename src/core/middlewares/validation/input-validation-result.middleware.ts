@@ -27,7 +27,7 @@ export const inputValidationResultMiddleware = (
 ) => {
     const errors = validationResult(req)
         .formatWith(formatErrors)
-        .array({ onlyFirstError: true }); // Если под одному полю несколько ошибок, уйдет только первая
+        .array({ onlyFirstError: true }); // Если по одному полю несколько ошибок, уйдет только первая
 
     if (errors.length > 0) {
         res.status(HttpStatus.BadRequest_400).json({ errorsMessages: errors });
