@@ -1,52 +1,36 @@
 import { Blog } from "../types/blog";
-import { db } from "../../db/in-memory.db";
+import { ObjectId, WithId } from "mongodb";
+import { blogCollection } from "../../db/collections";
 
 export const blogsRepository = {
     // Возвращаем все блоги
-    findAll(): Blog[] {
-        return db.blogs;
+    async findAll(): Promise<WithId<Blog>[]> {
+        return blogCollection.find().toArray();
     },
 
     // Возвращаем конкретный блог по id
-    findById(id: string): Blog | null {
-        return db.blogs.find((b) => b.id === id) ?? null;
+    async findById(id: string): Promise<WithId<Blog> | null> {
+        return blogCollection.findOne({ _id: new ObjectId(id) });
     },
 
-    // Создание блога, без поля id (id генерируется здесь)
-    create(newBlog: Omit<Blog, 'id'>): Blog {
-        // id последнего блога
-        const lastBlog = db.blogs[db.blogs.length - 1]
-        const nextId = lastBlog ? lastBlog.id + 1 : 1; // Генерируем id
-
-        const created: Blog = {
-            id: String(nextId), // Преобразовываем id в число
-            ...newBlog,
-        };
-
-        db.blogs.push(created);
-        return created;
+    async create(newBlog: Blog): Promise<WithId<Blog>> {
+        const insertResult = await blogCollection.insertOne(newBlog);
+        return { ...newBlog, _id: insertResult.insertedId };
     },
 
-    update(id: string, blog: Omit<Blog, 'id'>): boolean {
-        // Извлекаем id блога, который прислал клиент
-        const index = db.blogs.findIndex((b) => b.id === id);
-        if (index === -1) {
-            return false;
-        }
-
-        // Заменяем поля
-        db.blogs[index] = { ...db.blogs[index], ...blog };
-        return true;
+    async update(
+        id: string,
+        blog: Omit<Blog, 'createdAt' | 'isMembership'>
+    ): Promise<boolean> {
+        const updateResult = await blogCollection.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: blog }
+        );
+        return updateResult.matchedCount > 0;
     },
 
-    delete(id: string): boolean {
-        const index = db.blogs.findIndex((b) => b.id === id);
-        if (index === -1) {
-            return false;
-        }
-
-        // Удаляем блог по его id
-        db.blogs.splice(index, 1);
-        return true;
+    async delete(id: string): Promise<boolean> {
+        const deleteResult = await blogCollection.deleteOne({ _id: new ObjectId(id) });
+        return deleteResult.deletedCount > 0;
     },
 };

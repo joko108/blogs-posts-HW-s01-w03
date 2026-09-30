@@ -27,8 +27,8 @@ const blogIdValidation = body('blogId')
     .withMessage('Blog ID is required')
     .isString()
     .withMessage('ID must be a string')
-    .isNumeric()
-    .withMessage('must be a numeric string');
+    .isMongoId()
+    .withMessage('must be a Mongo ID');
 
 export const postInputDtoValidation = [
     titleValidation,

@@ -1,5 +1,6 @@
-// Модель поста
-export type Post = {
+// view-model для отправки по API.
+export type PostViewModel = {
+    id: string;
     title: string;
     shortDescription: string;
     content: string;

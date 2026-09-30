@@ -1,5 +1,6 @@
-// Модель блога
-export type Blog = {
+// view-model для отправки по API.
+export type BlogViewModel = {
+    id: string;
     name: string;
     description: string;
     websiteUrl: string;

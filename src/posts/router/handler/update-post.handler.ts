@@ -1,26 +1,29 @@
 import { PostInputDto } from "../../dto/post.input.dto";
-import { postsRepository } from "../../repository/posts.repository";
+import { postsRepository } from "../../repositories/posts.repository";
 import { Request, Response } from "express";
 import { HttpStatus } from "../../../core/types/http-statuses";
 import { createErrorMessages } from "../../../core/middlewares/validation/input-validation-result.middleware";
 
 // Хендлер на обновление, за БД не отвечает, только отправляет респонс клиенту
-export function updatePostHandler(
+export const updatePostHandler = async (
     req: Request<{ id: string }, {}, PostInputDto>,
     res: Response
-) {
-    const isUpdated = postsRepository.updatePost(req.params.id, req.body);
+) => {
+    try {
+        const id = req.params.id;
+        const post = await postsRepository.findPostById(id);
 
-    // Если из репозитория вернулось false, отправляем сообщение об ошибке
-    if (!isUpdated) {
-        res
-            .status(HttpStatus.NotFound_404)
-            .send(
-                createErrorMessages([{ message: 'Blog not found', field: 'id' }])
-            );
+        // Если из репозитория вернулось false, отправляем сообщение об ошибке
+        if (!post) {
+            res
+                .status(HttpStatus.NotFound_404)
+                .send(createErrorMessages([{ message: 'Post not found', field: 'id' }]));
+            return;
+        }
 
-        return;
+        await postsRepository.updatePost(id, req.body);
+        res.sendStatus(HttpStatus.NoContent_204);
+    } catch {
+        res.sendStatus(HttpStatus.InternalServerError_500);
     }
-
-    res.sendStatus(HttpStatus.NoContent_204);
-}
+};

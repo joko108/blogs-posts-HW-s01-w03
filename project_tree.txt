@@ -1,0 +1,79 @@
+.
+├── README.md
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── project_tree.txt
+├── src
+│   ├── auth
+│   │   └── middlewares
+│   │       └── super-admin.guard.middleware.ts
+│   ├── blogs
+│   │   ├── constants
+│   │   │   └── blogs.paths.ts
+│   │   ├── dto
+│   │   │   └── blog.input.dto.ts
+│   │   ├── repositories
+│   │   │   └── blogs.repository.ts
+│   │   ├── router
+│   │   │   ├── blogs.router.ts
+│   │   │   ├── handlers
+│   │   │   │   ├── create-blog.handler.ts
+│   │   │   │   ├── delete-blog.handler.ts
+│   │   │   │   ├── get-blog-list.handler.ts
+│   │   │   │   ├── get-blog.handler.ts
+│   │   │   │   └── update-blog.handler.ts
+│   │   │   └── mappers
+│   │   │       └── map-to-blog-view-model.utils.ts
+│   │   ├── types
+│   │   │   ├── blog-view-model.ts
+│   │   │   └── blog.ts
+│   │   └── validation
+│   │       └── blog.unput-dto.validation-middlewares.ts
+│   ├── core
+│   │   ├── middlewares
+│   │   │   └── validation
+│   │   │       ├── input-validation-result.middleware.ts
+│   │   │       └── params-id.validation.middleware.ts
+│   │   └── types
+│   │       ├── http-statuses.ts
+│   │       └── validation-error.ts
+│   ├── db
+│   │   ├── collections.ts
+│   │   └── mongo.db.ts
+│   ├── index.ts
+│   ├── posts
+│   │   ├── constants
+│   │   │   └── posts.paths.ts
+│   │   ├── dto
+│   │   │   └── post.input.dto.ts
+│   │   ├── repository
+│   │   │   └── posts.repository.ts
+│   │   ├── router
+│   │   │   ├── handler
+│   │   │   │   ├── create-post.handler.ts
+│   │   │   │   ├── delete-post.handler.ts
+│   │   │   │   ├── get-post-list.handler.ts
+│   │   │   │   ├── get-post.handler.ts
+│   │   │   │   └── update-post.handler.ts
+│   │   │   ├── mappers
+│   │   │   │   └── map-to-post-view-model.utils.ts
+│   │   │   └── posts.router.ts
+│   │   ├── types
+│   │   │   ├── post-view-model.ts
+│   │   │   └── post.ts
+│   │   └── validation
+│   │       └── post.unput-dto.validation-middlewares.ts
+│   ├── settings
+│   │   └── config.ts
+│   ├── setup-app.ts
+│   └── testing
+│       ├── constants
+│       │   └── testing.paths.ts
+│       └── router
+│           ├── handler
+│           │   └── truncate-db.handler.ts
+│           └── testing.router.ts
+└── tsconfig.json
+
+32 directories, 45 files

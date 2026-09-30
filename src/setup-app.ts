@@ -10,6 +10,7 @@ import { postsRouter } from "./posts/router/posts.router";
 export const setupApp = (app: Express) => {
     app.use(express.json());
 
+    // Health-check
     app.get('/', (req: Request, res: Response) => {
         res.status(HttpStatus.Ok_200).send('Hello World!');
     });
@@ -17,6 +18,4 @@ export const setupApp = (app: Express) => {
     app.use(BLOGS_PATHS, blogsRouter);      // Убираем из URL '/blogs'
     app.use(POSTS_PATHS, postsRouter);      // Убираем из URL '/posts'
     app.use(TESTING_PATHS, testingRouter);  // Убираем из URL '/testing'
-
-    return app;
 };
