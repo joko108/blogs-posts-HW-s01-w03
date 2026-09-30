@@ -4,4 +4,5 @@ import { truncateDbHandler } from "./handler/truncate-db.handler";
 
 export const testingRouter = Router({});
 
+// Запуск хендлера на зачистку коллекций.
 testingRouter.delete(TESTING_ROUTS.ALL_DATA, truncateDbHandler);
